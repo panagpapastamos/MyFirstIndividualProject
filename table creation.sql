@@ -1,0 +1,80 @@
+create database individualprojb;
+use individualprojb;
+show tables;
+
+
+
+CREATE TABLE student (
+STID INT AUTO_INCREMENT NOT NULL,
+F_NAME VARCHAR(45) NOT NULL,
+L_NAME VARCHAR(45) NOT NULL,
+TUITION_FEES INT NOT NULL,
+DATE_OF_BIRTH DATE NOT NULL,
+CONSTRAINT pk PRIMARY KEY (STID)
+);
+
+
+CREATE TABLE assignment (
+ASID INT AUTO_INCREMENT NOT NULL,
+TYPE VARCHAR(45) NOT NULL,
+DESCRIPTION VARCHAR(45) NOT NULL,
+SUB_DATE DATE NOT NULL,
+ORAL_MARK INT NOT NULL,
+TOTAL_MARK INT NOT NULL,
+CONSTRAINT pk PRIMARY KEY (ASID)
+);
+
+CREATE TABLE course (
+COID INT AUTO_INCREMENT NOT NULL,
+TITLE VARCHAR(45) NOT NULL,
+STREAM VARCHAR(45) NOT NULL,
+TYPE VARCHAR(45) NOT NULL,
+START_DATE DATE NOT NULL,
+END_DATE DATE NOT NULL,
+CONSTRAINT pk PRIMARY KEY(COID)
+);
+
+CREATE TABLE trainer(
+TRID INT AUTO_INCREMENT NOT NULL,
+F_NAME VARCHAR(45) NOT NULL,
+L_NAME VARCHAR(45) NOT NULL,
+SUBJECT VARCHAR(45) NOT NULL,
+CONSTRAINT pk PRIMARY KEY (TRID)
+);
+
+
+CREATE TABLE student_assign(
+STAS_ID  INT AUTO_INCREMENT NOT NULL,
+student_ID INT NOT NULL,
+assignment_ID INT NOT NULL,
+foreign key (student_ID) references student (STID),
+foreign key (assignment_ID) references assignment (ASID),
+PRIMARY KEY (STAS_ID));
+
+
+CREATE TABLE student_course(
+STCO_ID  INT AUTO_INCREMENT NOT NULL,
+student_ID INT NOT NULL,
+course_ID INT NOT NULL,
+foreign key (student_ID) references student (STID),
+foreign key (course_ID) references course (COID),
+PRIMARY KEY (STCO_ID));
+
+CREATE TABLE course_trainer(
+COTR_ID  INT AUTO_INCREMENT NOT NULL,
+course_ID INT NOT NULL,
+trainer_ID INT NOT NULL,
+foreign key (course_ID) references course (COID),
+foreign key (trainer_ID) references trainer (TRID),
+PRIMARY KEY (COTR_ID));
+
+CREATE TABLE course_assign(
+COAS_ID  INT AUTO_INCREMENT NOT NULL,
+course_ID INT NOT NULL,
+assignment_ID INT NOT NULL,
+foreign key (course_ID) references course (COID),
+foreign key (assignment_ID) references assignment (ASID),
+PRIMARY KEY (COAS_ID));
+
+
+
